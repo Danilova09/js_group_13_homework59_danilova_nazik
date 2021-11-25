@@ -1,0 +1,8 @@
+<div class="questions-block">
+  <app-question *ngFor="let question of questions"
+  [question]="question"></app-question>
+  <div class="results-block">
+    <p>Количество вопросов: {{ answersAmount }}</p>
+    <p>Количество правильных ответов: 0</p>
+  </div>
+</div>

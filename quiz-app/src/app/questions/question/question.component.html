@@ -1,12 +1,12 @@
 <form (ngSubmit)="onSubmit()" ngNativeValidate>
-  <div class="card border-dark mb-4">
+  <div class="card mb-4" appCardBorder="{{ answerStatus }}">
     <div class="card-body text-dark">
       <h5 class="card-title">{{ this.question.question }}</h5>
       <input required="required" class="form-control form-control-sm mb-4" type="text" [(ngModel)]="answer"  name="answer">
-      <button class="btn btn-primary" type="submit">ответить</button>
-      <button class="btn btn-success ml-2" type="button" (click)="onPromptToggle()">подсказка</button>
-      <div class="alert alert-secondary ml-3 my-0" role="alert"  *ngIf="this.prompt">
-        {{ this.question.prompt}}
+      <button class="btn btn-primary" type="submit" [disabled]="isClicked">ответить</button>
+      <button class="btn btn-success ml-2" type="button" (click)="promptToggle()">подсказка</button>
+      <div class="alert alert-secondary ml-3 my-0" role="alert" *ngIf="promptIsOpen">
+        {{ this.question.prompt }}
       </div>
     </div>
   </div>

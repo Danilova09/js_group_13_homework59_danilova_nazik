@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { QuestionsService } from '../shared/questions.service';
 import { Question } from '../shared/question.model';
+import { QuestionsService } from '../shared/questions.service';
 
 @Component({
   selector: 'app-questions',
@@ -9,13 +9,25 @@ import { Question } from '../shared/question.model';
 })
 export class QuestionsComponent implements OnInit {
   questions: Question[] = [];
-  answersAmount!: number;
+  rightAnswers = 0;
+  questionsAmount!: number;
 
-  constructor(private questionsService: QuestionsService) { }
+  constructor(private questionsService: QuestionsService) {}
 
-  ngOnInit() {
+
+  ngOnInit(): void {
     this.questions = this.questionsService.getQuestions();
-    this.answersAmount = this.questions.length;
+    this.rightAnswers = this.questionsService.getRightAnswers();
+    this.questionsAmount = this.questionsService.getQuestionsAmount();
+    this.questionsService.questionsChange.subscribe((questions: Question[]) => {
+      this.questions = questions;
+    })
+    this.questionsService.onRightAnswersChange.subscribe((answersAmount: number) => {
+      this.rightAnswers = answersAmount;
+    })
+    this.questionsService.onQuestionsAmount.subscribe((amount:number) => {
+      this.questionsAmount = amount;
+    })
   }
 
 }

@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { QuestionsService } from '../../shared/questions.service';
 import { Question } from '../../shared/question.model';
 
 @Component({
@@ -6,20 +7,37 @@ import { Question } from '../../shared/question.model';
   templateUrl: './question.component.html',
   styleUrls: ['./question.component.css']
 })
-export class QuestionComponent {
+export class QuestionComponent implements OnInit {
   @Input() question!: Question;
-  prompt = false;
+  @Input() answerStatus!: string;
+  isClicked = false;
+  promptIsOpen = false;
   answer = '';
+  alert!: string;
 
-  constructor() { }
+  constructor(private questionsService: QuestionsService) {
+  }
 
-  onPromptToggle() {
-    this.prompt = !this.prompt;
+  ngOnInit() {
   }
 
   onSubmit() {
-    console.log('is submitted');
-    console.log(this.answer);
+    this.questionsService.onQuestionsChange();
+    this.questionsService.checkAnswer(this.question, this.answer);
+    this.isClicked = true;
+    if (this.question.answerStatus === 'ответ верный') {
+      this.alert = 'alert-success';
+    } else if (this.question.answerStatus === 'ответ неверный') {
+      this.alert = 'alert-danger';
+    }
+
   }
 
+  alertResponse($event: string) {
+    console.log('alert response');
+  }
+
+  promptToggle() {
+    this.promptIsOpen = !this.promptIsOpen;
+  }
 }

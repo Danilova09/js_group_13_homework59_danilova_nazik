@@ -6,6 +6,7 @@ import { QuestionsComponent } from './questions/questions.component';
 import { QuestionComponent } from './questions/question/question.component';
 import { FormsModule } from '@angular/forms';
 import { QuestionsService } from './shared/questions.service';
+import { CardBorderDirective } from './directives/card-border.directive';
 
 
 @NgModule({
@@ -13,6 +14,7 @@ import { QuestionsService } from './shared/questions.service';
     AppComponent,
     QuestionsComponent,
     QuestionComponent,
+    CardBorderDirective
   ],
   imports: [
     BrowserModule,
